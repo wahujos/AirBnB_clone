@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""base module for other classes"""
 from uuid import uuid4
 from datetime import datetime
 from models import storage
@@ -6,6 +7,7 @@ from models import storage
 
 class BaseModel:
     """base that defines all common attributes/methods for other classes"""
+
     def __init__(self, *args, **kwargs):
         """iniatializing the model"""
 
@@ -24,16 +26,20 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
+        """definig str that print"""
+
         classname = self.__class__.__name__
         return "[{}] ({}) {}".format(classname, self.id, self.__dict__)
 
     def save(self):
-        """public instance to save date"""
+        """method that update public instance attribute of updated date"""
+
         self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
         """instance that returns a dictionary containing all keys/values"""
+
         obj_dict = self.__dict__.copy()
         obj_dict["__class__"] = self.__class__.__name__
         obj_dict["created_at"] = self.created_at.isoformat()
