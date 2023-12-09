@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Documenting all the modules"""
 
 import cmd
 import sys
@@ -20,6 +21,7 @@ class HBNBCommand(cmd.Cmd):
     the command interpreter:
     """
     prompt = "(hbnb)"
+
     def precmd(self, arg):
         """Responsible for the non-interactive mode"""
         if not sys.stdin.isatty():
