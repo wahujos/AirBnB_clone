@@ -3,57 +3,69 @@
 
 import json
 import unittest
-# from unittest.mock import patch, mock_open
+import os
+from unittest.mock import patch, mock_open
 from models.base_model import BaseModel
+from models.user import User
 from models.engine.file_storage import FileStorage
 
 
 class TestFileStorage(unittest.TestCase):
     """This is a class testing the File storage"""
-    def test_all(self):
+    def SetUp(self):
         """Test whether the all function actually returns a dictionary"""
+        self.file_path = "file.json"
+        with patch('models.engine.file_storage.FileStorage.__file_path',
+                   self.file_path):
+            self.storage = FileStorage()
+
+    def tearDown(self):
+        try:
+            os.remove(self.storage._FileStorage__file_path)
+        except FileNotFoundError:
+            pass
+
+    def test_all_empty(self):
         self.storage = FileStorage()
-        res = self.storage.all()
-        self.assertIsInstance(res, dict)
+        self.assertNotEqual(self.storage.all(), {})
 
     def test_new(self):
-        """Test whether the new object sets in the object with the key specified"""
+        """Test new object sets in the object with the key specified"""
         self.storage = FileStorage()
         obj = BaseModel()
         self.storage.new(obj)
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         self.assertIn(key, self.storage.all())
 
-    # def test_save(self):
-    #     """Test whether the function serializes objects to json file"""
-    #     self.storage = FileStorage()
-    #     with patch('builtins.open', create=True) as mock_open:
-    #         self.storage.save()
-    #         mock_open.assert_called_with(FileStorage._FileStorage__file_path, 'w')
-    #         mock_open().write.assert_called()
-
-    # def test_reload(self):
-    #     """
-    #     Test whether the function reload will deserialize the
-    #     object from the file.read the contents of the file
-    #     """
-    #     self.storage = FileStorage()
-    #     obj_dict = {'BaseModel.1': {'id': '1', 'name': 'example'}}
-    #     with patch('builtins.open', create=True) as mock_open:
-
-    #         mock_open().read.return_value = json.dumps(obj_dict)
-    #         self.storage.reload()
-    #         mock_open.assert_called_with(FileStorage._FileStorage__file_path, 'r')
+    def test_save(self):
+        """Test whether the function serializes objects to json file"""
+        self.storage = FileStorage()
+        model = BaseModel()
+        self.storage.new(model)
+        self.storage.save()
+        with open(self.storage._FileStorage__file_path, 'r') as file:
+            key = "BaseModel.{}".format(model.id)
+            self.assertIn(key, file.read())
 
     def test_reload(self):
         self.storage = FileStorage()
-        obj_dict = {'BaseModel.1': {'id': '1', 'name': 'example'}}
-        with patch('builtins.open', mock_open(read_data=json.dumps(obj_dict))):
-            self.storage.reload()
+        model = BaseModel()
+        self.storage.new(model)
+        self.storage.save()
+        self.storage.reload()
+        all_objs = self.storage.all()
+        key = "BaseModel.{}".format(model.id)
+        self.assertIn(key, all_objs.keys())
+        self.assertNotEqual(len(all_objs), 1)
 
-    def test_save(self):
+    def test_reload_file_not_found(self):
         self.storage = FileStorage()
-        with patch('builtins.open', mock_open()) as mock_file:
-            self.storage.save()
-            mock_file.assert_called_once_with(FileStorage._FileStorage__file_path, 'w')
-            mock_file().write.assert_called_once()
+        model = BaseModel()
+        self.storage.new(model)
+        self.storage.save()
+        self.storage.reload()
+        self.assertNotEqual(self.storage.all(), {})
+
+
+if __name__ == '__main__':
+    unittest.main()

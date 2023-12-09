@@ -70,7 +70,7 @@ class TestBaseModel(unittest.TestCase):
         Model.save()
         new_updated_at = Model.updated_at
         self.assertNotEqual(new_updated_at, old_updated_at)
-    
+
     def test_to_dict_method(self):
         obj_dict = BaseModel().to_dict()
         self.assertIsInstance(obj_dict, dict)
@@ -78,8 +78,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn('created_at', obj_dict)
         self.assertIn('updated_at', obj_dict)
         self.assertEqual(obj_dict['__class__'], 'BaseModel')
-        self.assertIsInstance(datetime.fromisoformat(obj_dict['created_at']), datetime)
-        self.assertIsInstance(datetime.fromisoformat(obj_dict['updated_at']), datetime)
+        self.assertIsInstance(datetime.fromisoformat(obj_dict['created_at']),
+                              datetime)
+        self.assertIsInstance(datetime.fromisoformat(obj_dict['updated_at']),
+                              datetime)
 
     def test_args_dict(self):
         base = BaseModel()

@@ -50,4 +50,7 @@ class TestUser(unittest.TestCase):
         self.assertIn('password', user_dict)
         self.assertIn('first_name', user_dict)
         self.assertIn('last_name', user_dict)
-    
+
+
+if __name__ == '__main__':
+    unittest.main()
