@@ -11,11 +11,11 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """iniatializing the model"""
 
-        date_format = "%Y-%m-%dT%H:%M:%S.%f"
+        datetime_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
-                    value = datetime.strptime(value, date_format)
+                    value = datetime.strptime(value, datetime_format)
 
                 if key != "__class__":
                     setattr(self, key, value)
