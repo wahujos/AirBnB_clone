@@ -4,7 +4,7 @@
 import json
 import unittest
 import os
-from unittest.mock import patch, mock_open
+from unittest.mock import patch
 from models.base_model import BaseModel
 from models.user import User
 from models.engine.file_storage import FileStorage
@@ -20,12 +20,14 @@ class TestFileStorage(unittest.TestCase):
             self.storage = FileStorage()
 
     def tearDown(self):
+        """the tear down"""
         try:
             os.remove(self.storage._FileStorage__file_path)
         except FileNotFoundError:
             pass
 
     def test_all_empty(self):
+        """test empty"""
         self.storage = FileStorage()
         self.assertNotEqual(self.storage.all(), {})
 
@@ -48,6 +50,7 @@ class TestFileStorage(unittest.TestCase):
             self.assertIn(key, file.read())
 
     def test_reload(self):
+        """test reload assertion"""
         self.storage = FileStorage()
         model = BaseModel()
         self.storage.new(model)
@@ -59,6 +62,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertNotEqual(len(all_objs), 1)
 
     def test_reload_file_not_found(self):
+        """test reload method"""
         self.storage = FileStorage()
         model = BaseModel()
         self.storage.new(model)

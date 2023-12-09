@@ -10,16 +10,19 @@ class TestUser(unittest.TestCase):
     """Tesing the user class"""
 
     def test_init_user(self):
+        """initialisation test"""
         user = User()
         self.assertIsInstance(user, User)
         self.assertIsInstance(user, BaseModel)
 
     def setUp(self):
+        """defining set up"""
         self.store = FileStorage()
         self.store.reload()
         self.store._FileStorage__objects = {}
 
     def test_user(self):
+        """test user values"""
         user = User()
         user.first_name = "Afeez"
         user.last_name = "Lasisi"
@@ -32,9 +35,11 @@ class TestUser(unittest.TestCase):
         self.assertIn(key, my_objs.keys())
 
     def teardown(self):
+        """test the tear down"""
         self.store._FileStorage__objects = {}
 
     def test_user_to_dict(self):
+        """test the user to dict"""
         user = User()
         user.first_name = "Afeez"
         user.last_name = "Lasisi"

@@ -10,6 +10,7 @@ from models.base_model import BaseModel
 
 
 class TestBaseModel(unittest.TestCase):
+    """test case for base model"""
 
     def test_init_(self):
         """test initialization instances"""
@@ -29,6 +30,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(base_1.id, base_2.id)
 
     def test_attr_init(self):
+        """test attribute"""
         base = BaseModel(None)
         base.name = "My Model"
         base.number = 73
@@ -38,6 +40,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(base, "updated_at"))
 
     def test_kwargs(self):
+        """test the kwargs"""
         my_dict = {
                 'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337',
                 'created_at': '2017-09-28T21:03:54.052298',
@@ -54,16 +57,19 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(Model_dict.updated_at, datetime)
 
     def test_str_method(self):
+        """test the str"""
         model = BaseModel()
         expected_output = f"[BaseModel] ({model.id}) {model.__dict__}"
         self.assertEqual(str(model), expected_output)
 
     def test_save_method(self):
+        """test save mothod"""
         base = BaseModel()
         base.save()
         self.assertNotEqual(base.created_at, base.updated_at)
 
     def test_date_updated(self):
+        """test up to date"""
         Model = BaseModel()
         old_updated_at = Model.updated_at
         sleep(0.1)
@@ -72,6 +78,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(new_updated_at, old_updated_at)
 
     def test_to_dict_method(self):
+        """test dict method"""
         obj_dict = BaseModel().to_dict()
         self.assertIsInstance(obj_dict, dict)
         self.assertIn('__class__', obj_dict)
@@ -84,6 +91,7 @@ class TestBaseModel(unittest.TestCase):
                               datetime)
 
     def test_args_dict(self):
+        """test arguments dictionary"""
         base = BaseModel()
         with self.assertRaises(TypeError):
             base.to_dict(None)
