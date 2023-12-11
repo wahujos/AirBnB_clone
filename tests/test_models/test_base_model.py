@@ -81,6 +81,12 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(base.created_at, base.updated_at)
         self.assertIsInstance(base.updated_at, datetime)
 
+    def test_to_dict_contains_correct_values(self):
+        """Self explain"""
+        my_model = BaseModel()
+        my_dict = my_model.to_dict()
+        self.assertEqual(my_dict["id"], my_model.id)
+
     def test_date_updated(self):
         """test up to date"""
         Model = BaseModel()
@@ -102,6 +108,15 @@ class TestBaseModel(unittest.TestCase):
                               datetime)
         self.assertIsInstance(datetime.fromisoformat(obj_dict['updated_at']),
                               datetime)
+        
+    def test_to_dict_contains_correct_keys(self):
+        """Self explain"""
+        my_model = BaseModel()
+        my_dict = my_model.to_dict()
+        self.assertIn("id", my_dict)
+        self.assertIn("created_at", my_dict)
+        self.assertIn("updated_at", my_dict)
+        self.assertIn("__class__", my_dict)
 
     def test_args_dict(self):
         """test arguments dictionary"""
