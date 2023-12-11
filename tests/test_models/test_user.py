@@ -5,6 +5,7 @@ from models.base_model import BaseModel
 from models.user import User
 from models.engine.file_storage import FileStorage
 import models
+from datetime import datetime
 
 
 class TestUser(unittest.TestCase):
@@ -71,6 +72,24 @@ class TestUser(unittest.TestCase):
         """test for empty kwarg"""
 
         self.assertIn(User(), models.storage.all().values())
+
+    def test_attr_init(self):
+        """testing attribute of review"""
+
+        rev_1 = User()
+        rev_2 = User()
+        self.assertTrue(hasattr(rev_1, "email"))
+        self.assertTrue(hasattr(rev_1, "password"))
+        self.assertTrue(hasattr(rev_1, "first_name"))
+        self.assertTrue(hasattr(rev_1, "last_name"))
+        self.assertIsInstance(rev_1.created_at, datetime)
+        self.assertIsInstance(rev_1.updated_at, datetime)
+        self.assertIsInstance(rev_1.last_name, str)
+        self.assertIsInstance(rev_1.email, str)
+        self.assertIsInstance(rev_1.last_name, str)
+        self.assertIsInstance(rev_1.first_name, str)
+        self.assertNotEqual(rev_2.created_at, rev_1.created_at)
+        self.assertNotEqual(rev_1.updated_at, rev_2.updated_at)
 
 
 if __name__ == '__main__':
