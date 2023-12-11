@@ -20,6 +20,18 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(instance.created_at, datetime)
         self.assertIsInstance(instance.updated_at, datetime)
         self.assertNotEqual(instance.created_at, instance.updated_at)
+    
+    def test_init_attributes(self):
+        """ tests the init method with created_at/updated_at attribute"""
+        base = BaseModel(None)
+        base.name = "My First Model"
+        base.number = 89
+        self.assertTrue(hasattr(base, "created_at"))
+        self.assertTrue(hasattr(base, "updated_at"))
+        self.assertTrue(hasattr(base, "name"))
+        self.assertTrue(hasattr(base, "number"))
+        self.assertIsInstance(base.created_at, datetime)
+        self.assertIsInstance(base.updated_at, datetime)
 
     def test_id_init(self):
         """test initiization id"""
