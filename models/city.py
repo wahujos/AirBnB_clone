@@ -11,9 +11,3 @@ class City(BaseModel):
     """
     state_id = ""
     name = ""
-
-    def __init__(self, *args, **kwags):
-        """
-        defining the initialization function
-        """
-        super().__init__(*args, **kwags)
