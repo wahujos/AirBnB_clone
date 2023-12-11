@@ -16,19 +16,19 @@ class FileStorage:
     def all(self):
         """Public instance method that return the dictionary object"""
 
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """Public instance method that set in object with key"""
 
         key = f"{obj.__class__.__name__}.{obj.id}"
-        FileStorage.__objects[key] = obj
+        self.__objects[key] = obj
 
     def save(self):
         """instance method that serializes object to json file"""
 
         object_dict = {key: obj.to_dict() for key, obj
-                       in FileStorage.__objects.items()}
+                       in self.__objects.items()}
         with open(self.__file_path, 'w') as file:
             json.dump(object_dict, file)
 
