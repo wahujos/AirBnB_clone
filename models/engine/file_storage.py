@@ -28,8 +28,8 @@ class FileStorage:
         """instance method that serializes object to json file"""
 
         object_dict = {key: obj.to_dict() for key, obj
-                       in self.__objects.items()}
-        with open(self.__file_path, 'w') as file:
+                       in FileStorage.__objects.items()}
+        with open(FileStorage.__file_path, 'w') as file:
             json.dump(object_dict, file)
 
     def reload(self):
