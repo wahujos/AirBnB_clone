@@ -5,7 +5,7 @@ from datetime import datetime
 import json
 from models.base_model import BaseModel
 from models.state import State
-from models.engine.file_storage import self
+from models.engine.file_storage import FileStorage
 
 
 class TestState(unittest.TestCase):
