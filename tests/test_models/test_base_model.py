@@ -124,15 +124,15 @@ class TestBaseModel(unittest.TestCase):
         with self.assertRaises(TypeError):
             base.to_dict(None)
 
-    def test_save_updates_updated_at(self):
+    def test_save(self):
         """Test that the save method updates the updated_at attribute"""
         my_model = BaseModel()
         old_updated_at = my_model.updated_at
-        sleep(0.1)
         my_model.save()
+        # sleep(0.1)
         new_updated_at = my_model.updated_at
         self.assertNotEqual(old_updated_at, new_updated_at)
-        self.assertIsInstance(my_model.updated_at, datetime)
+        self.assertIsInstance(old_updated_at, datetime)
 
 
 if __name__ == '__main__':
