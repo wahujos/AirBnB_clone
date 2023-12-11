@@ -35,7 +35,7 @@ class BaseModel:
         """method that update public instance attribute of updated date"""
 
         self.updated_at = datetime.now()
-        storage.save()
+        storage.save(self)
 
     def to_dict(self):
         """instance that returns a dictionary containing all keys/values"""
