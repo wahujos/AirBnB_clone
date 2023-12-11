@@ -88,6 +88,7 @@ class TestUser(unittest.TestCase):
         self.assertIsInstance(rev_1.email, str)
         self.assertIsInstance(rev_1.last_name, str)
         self.assertIsInstance(rev_1.first_name, str)
+        self.assertIsInstance(rev_1.password, str)
         self.assertNotEqual(rev_2.created_at, rev_1.created_at)
         self.assertNotEqual(rev_1.updated_at, rev_2.updated_at)
 
