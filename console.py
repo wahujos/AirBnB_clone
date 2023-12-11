@@ -101,33 +101,61 @@ class HBNBCommand(cmd.Cmd):
         print(class_instances)
 
     def do_update(self, arg):
-        """
-        Update an instance based on the class name and id
-        by adding or updating attribute
-        """
-        args = arg.split()
-        if len(args) == 0:
-            print('** class name missing **')
-        elif args[0] not in globals():
-            print('** class doesn\'t exist **')
-        elif len(args) == 1:
-            print('** instance id missing **')
-        else:
-            key = f'{args[0]}.{args[1]}'
-            all_objs = storage.all()
-            if key not in all_objs:
-                print('** no instance found **')
-            elif len(args) == 2:
-                print('** attribute name missing **')
-            elif len(args) == 3:
-                print('** value missing **')
-            else:
-                obj = all_objs[key]
-                attr_name = args[2]
-                attr_type = type(getattr(obj, attr_name, ''))
-                attr_value = attr_type(args[3].strip('"'))
-                setattr(obj, attr_name, attr_value)
-                obj.save()
+        """Responsible for updating attributes in the objects"""
+        args = shlex.split(arg)
+        class_name = args[0]
+        if not class_name:
+            print("** class name missing **")
+            return
+        if class_name not in globals():
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+        id_instance = args[1]
+        key = "{}.{}".format(class_name, id_instance)
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+
+        attribute_name = args[2]
+        if len(args) < 4:
+            print("** value missing **")
+            return
+        value_str = args[3]
+        instance = storage.all()[key]
+
+        if not hasattr(instance, attribute_name):
+            setattr(instance, attribute_name, value_str)
+            instance.save()
+            return
+
+        attribute_type = type(getattr(instance, attribute_name, None))
+
+        try:
+            # if attribute_type is not None:
+            #     if attribute_type is not type(None):
+            #         value = attribute_type(value_str)
+            #     else:
+            #         value = value_str
+            # else:
+            #     value = value_str
+
+            # if attribute_type is not None and
+            # attribute_type is not type(None):
+            # if attribute_type is not None and\
+            #     not isinstance(attribute_type, None):
+            if attribute_type and not isinstance(attribute_type, type(None)):
+                value = attribute_type(value_str)
+        except ValueError:
+            print("** invalid value **")
+            return
+        setattr(instance, attribute_name, value)
+        instance.save()
 
     def emptyline(self):
         """
