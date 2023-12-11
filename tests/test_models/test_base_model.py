@@ -117,6 +117,7 @@ class TestBaseModel(unittest.TestCase):
         my_model.save()
         new_updated_at = my_model.updated_at
         self.assertNotEqual(old_updated_at, new_updated_at)
+        self.assertIsInstance(my_model.updated_at, datetime)
 
 
 if __name__ == '__main__':
