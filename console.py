@@ -103,10 +103,10 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Responsible for updating attributes in the objects"""
         args = shlex.split(arg)
-        class_name = args[0]
-        if not class_name:
+        if len(args) == 0:
             print("** class name missing **")
             return
+        class_name = args[0]
         if class_name not in globals():
             print("** class doesn't exist **")
             return
