@@ -77,6 +77,18 @@ class TestState(unittest.TestCase):
         """test for empty kwarg"""
 
         self.assertIn(State(), models.storage.all().values())
+    
+    def test_attr_init(self):
+        """testing attribute of review"""
+
+        rev_1 = State()
+        rev_2 = State()
+        self.assertTrue(hasattr(rev_1, "name"))
+        self.assertIsInstance(rev_1.created_at, datetime)
+        self.assertIsInstance(rev_1.updated_at, datetime)
+        self.assertIsInstance(rev_1.name, str)
+        self.assertNotEqual(rev_2.created_at, rev_1.created_at)
+        self.assertNotEqual(rev_1.updated_at, rev_2.updated_at)
 
 
 if __name__ == '__main__':
