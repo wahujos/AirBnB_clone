@@ -3,7 +3,7 @@
 import json
 
 
-class self:
+class FileStorage:
     """
     class that serializes instances to a JSON file and deserializes
     JSON file to instances
@@ -15,27 +15,27 @@ class self:
     def all(self):
         """Public instance method that return the dictionary object"""
 
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """Public instance method that set in object with key"""
 
         key = f"{obj.__class__.__name__}.{obj.id}"
-        self.__objects[key] = obj
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """instance method that serializes object to json file"""
 
         object_dict = {key: obj.to_dict() for key, obj
-                       in self.__objects.items()}
-        with open(self.__file_path, 'w') as file:
+                       in FileStorage.__objects.items()}
+        with open(FileStorage.__file_path, 'w') as file:
             json.dump(object_dict, file)
 
     def reload(self):
         """instance methods to deserilizes json file to objects"""
 
         try:
-            with open(self.__file_path, 'r') as file:
+            with open(FileStorage.__file_path, 'r') as file:
                 obj_load = json.load(file)
 
                 from models.base_model import BaseModel
@@ -58,6 +58,6 @@ class self:
                 for key, value in obj_load.items():
                     classname, object_id = key.split('.')
                     point = class_dict[classname]
-                    self.__objects[key] = point(**value)
+                    FileStorage.__objects[key] = point(**value)
         except FileNotFoundError:
             pass
