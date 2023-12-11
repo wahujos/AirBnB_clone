@@ -6,6 +6,7 @@ import json
 from models.base_model import BaseModel
 from models.state import State
 from models.engine.file_storage import FileStorage
+import models
 
 
 class TestState(unittest.TestCase):
@@ -71,6 +72,11 @@ class TestState(unittest.TestCase):
         self.assertEqual(self.state.name, new_state.name)
         self.assertEqual(self.state.created_at, new_state.created_at)
         self.assertEqual(self.state.updated_at, new_state.updated_at)
+
+    def test_kwargs_empty(self):
+        """test for empty kwarg"""
+
+        self.assertIn(State(), models.storage.all().values())
 
 
 if __name__ == '__main__':
