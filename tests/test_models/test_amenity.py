@@ -41,3 +41,7 @@ class TestAmenity(unittest.TestCase):
         obj_dict = self.amenity.__dict__
         estr = "[{}] ({}) {}".format(class_name, identity, obj_dict)
         self.assertEqual(str(self.amenity), estr)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -7,7 +7,7 @@ import os
 from unittest.mock import patch
 from models.base_model import BaseModel
 from models.user import User
-from models.engine.file_storage import FileStorage
+from models.engine.file_storage import self
 
 
 class TestFileStorage(unittest.TestCase):
@@ -17,7 +17,7 @@ class TestFileStorage(unittest.TestCase):
         self.file_path = "file.json"
         with patch('models.engine.file_storage.FileStorage.__file_path',
                    self.file_path):
-            self.storage = FileStorage()
+            self.storage = self()
 
     def tearDown(self):
         """the tear down"""
@@ -28,12 +28,12 @@ class TestFileStorage(unittest.TestCase):
 
     def test_all_empty(self):
         """test empty"""
-        self.storage = FileStorage()
+        self.storage = self()
         self.assertNotEqual(self.storage.all(), {})
 
     def test_new(self):
         """Test new object sets in the object with the key specified"""
-        self.storage = FileStorage()
+        self.storage = self()
         obj = BaseModel()
         self.storage.new(obj)
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
@@ -41,7 +41,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_save(self):
         """Test whether the function serializes objects to json file"""
-        self.storage = FileStorage()
+        self.storage = self()
         model = BaseModel()
         self.storage.new(model)
         self.storage.save()
@@ -51,7 +51,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload(self):
         """test reload assertion"""
-        self.storage = FileStorage()
+        self.storage = self()
         model = BaseModel()
         self.storage.new(model)
         self.storage.save()
@@ -63,7 +63,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload_file_not_found(self):
         """test reload method"""
-        self.storage = FileStorage()
+        self.storage = self()
         model = BaseModel()
         self.storage.new(model)
         self.storage.save()

@@ -3,8 +3,9 @@
 import unittest
 from models.base_model import BaseModel
 from models.user import User
-from models.engine.file_storage import FileStorage
+from models.engine.file_storage import self
 import models
+
 
 class TestUser(unittest.TestCase):
     """Tesing the user class"""
@@ -17,7 +18,7 @@ class TestUser(unittest.TestCase):
 
     def setUp(self):
         """defining set up"""
-        self.store = FileStorage()
+        self.store = self()
         self.store.reload()
         # self.store._FileStorage__objects = {}
 

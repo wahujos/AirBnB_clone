@@ -5,7 +5,7 @@ from datetime import datetime
 import json
 from models.base_model import BaseModel
 from models.state import State
-from models.engine.file_storage import FileStorage
+from models.engine.file_storage import self
 
 
 class TestState(unittest.TestCase):
@@ -71,3 +71,7 @@ class TestState(unittest.TestCase):
         self.assertEqual(self.state.name, new_state.name)
         self.assertEqual(self.state.created_at, new_state.created_at)
         self.assertEqual(self.state.updated_at, new_state.updated_at)
+
+
+if __name__ == '__main__':
+    unittest.main()
