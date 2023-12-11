@@ -79,6 +79,7 @@ class TestBaseModel(unittest.TestCase):
         base = BaseModel()
         base.save()
         self.assertNotEqual(base.created_at, base.updated_at)
+        self.assertIsInstance(base.updated_at, datetime)
 
     def test_date_updated(self):
         """test up to date"""
