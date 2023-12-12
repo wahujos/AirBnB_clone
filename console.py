@@ -177,6 +177,28 @@ class HBNBCommand(cmd.Cmd):
                 p1 = parts[1].split('(')
                 p2 = p1[1].split('"')
                 self.do_destroy("{} {}".format(parts[0], p2[1]))
+            elif parts[1].startswith('update'):
+                p1 = parts[1].split('(')
+                p2 = p1[1].split(', ')
+                p3 = p2[0].split(' ')
+                p4 = p2[1].split(' ')
+                p5 = p2[2].split(' ')
+                id_u = p3[0].split('"')
+                key_u = p4[0].split('"')
+                val_u = p5[0].split('"')
+                # print(f"{id_u[1]}")
+                # print(f"{key_u[1]}")
+                # print(f"{val_u[1]}")
+
+
+
+                # p1_key = parts[2].split('(')
+                # p1_value = parts[3].split('(')
+                # p2 = p1_id[1].split('"')
+                # p3 = p1_key[1].split('"')
+                # p4 = p1_value[1].split('"')
+                self.do_update("{} {} {} '{}'".format(parts[0], id_u[1], key_u[1], val_u[1]))
+
 
     def emptyline(self):
         """
