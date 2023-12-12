@@ -135,7 +135,6 @@ class HBNBCommand(cmd.Cmd):
             return
 
         attribute_type = type(getattr(instance, attribute_name, None))
-
         try:
             # if attribute_type is not None:
             #     if attribute_type is not type(None):
@@ -156,6 +155,24 @@ class HBNBCommand(cmd.Cmd):
             return
         setattr(instance, attribute_name, value)
         instance.save()
+
+    def default(self, line):
+        """The default function"""
+        parts = line.split('.')
+        if parts[0] in globals():
+            if parts[1] == 'all()':
+                self.do_all(parts[0])
+            elif parts[1] == 'count()':
+                lin = [
+                        v for k, v in storage.all().items()
+                        if k.startswith(parts[0])
+                        ]
+                print(len(lin))
+                return
+            elif parts[1].startswith('show'):
+                p1 = parts[1].split('(')
+                p2 = p1[1].split('"')
+                self.do_show("{} {}".format(parts[0], p2[1]))
 
     def emptyline(self):
         """
