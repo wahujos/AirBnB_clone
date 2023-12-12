@@ -173,6 +173,10 @@ class HBNBCommand(cmd.Cmd):
                 p1 = parts[1].split('(')
                 p2 = p1[1].split('"')
                 self.do_show("{} {}".format(parts[0], p2[1]))
+            elif parts[1].startswith('destroy'):
+                p1 = parts[1].split('(')
+                p2 = p1[1].split('"')
+                self.do_destroy("{} {}".format(parts[0], p2[1]))
 
     def emptyline(self):
         """
